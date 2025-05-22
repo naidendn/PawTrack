@@ -101,4 +101,4 @@ Response: JSON array of measurements.
 
 ## License
 
-MIT License © Your Name Here
+MIT License © Nayden Nikolov
