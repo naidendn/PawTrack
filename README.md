@@ -76,7 +76,7 @@ Response: JSON array of measurements.
 
 ## Frontend
 
-- Simple HTML + JS frontend in `frontend/` folder (optional)  
+- Simple HTML + JS frontend in `webapp/` folder (optional)  
 - Visualizes latest sensor data with charts  
 - Dark theme with responsive design  
 
