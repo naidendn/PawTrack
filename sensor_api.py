@@ -73,4 +73,4 @@ class SensorAPI:
             return jsonify(items), 200
 
     def run(self, debug=True):
-        self.app.run(debug=debug)
+        self.app.run(debug=debug, host='0.0.0.0', port=5000)
