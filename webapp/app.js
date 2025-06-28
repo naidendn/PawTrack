@@ -18,7 +18,7 @@ function formatTimestamp(isoString) {
 
 async function fetchLatestData() {
     try {
-        const response = await fetch('http://192.168.0.100:5000/sensor_data?room_id=bedroom&limit=20');
+        const response = await fetch('http://localhost:5000/sensor_data?room_id=bedroom&limit=20');
         if (!response.ok) throw new Error('Network response not ok');
 
         const data = await response.json();
