@@ -1,0 +1,23 @@
+name: Build and Push Docker Image
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-push:
+    runs-on: self-hosted
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Log in to private registry
+        run: docker login ${{ secrets.REGISTRY_URL }} -u ${{ secrets.REGISTRY_USERNAME }} -p ${{ secrets.REGISTRY_PASSWORD }}
+
+      - name: Build Docker image
+        run: docker build -t ${{ secrets.REGISTRY_URL }}/pawtrack:latest .
+
+      - name: Push Docker image
+        run: docker push ${{ secrets.REGISTRY_URL }}/pawtrack:latest
