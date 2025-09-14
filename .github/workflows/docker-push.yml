@@ -13,32 +13,49 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Temporarily disable credential store
+      - name: Force remove credential store and login
         run: |
           # Backup original config
           cp ~/.docker/config.json ~/.docker/config.json.backup
           
-          # Remove credsStore to use direct auth storage
+          # Remove the credsStore line completely using Python
           python3 -c "
           import json
           with open('$HOME/.docker/config.json', 'r') as f:
               config = json.load(f)
-          config.pop('credsStore', None)
+          # Remove credsStore completely
+          if 'credsStore' in config:
+              del config['credsStore']
           with open('$HOME/.docker/config.json', 'w') as f:
               json.dump(config, f, indent=2)
           "
+          
+          echo "=== Config after removing credsStore ==="
+          cat ~/.docker/config.json
 
       - name: Login to registry
         run: |
+          docker logout ${{ secrets.REGISTRY_URL }} || true
           echo "${{ secrets.REGISTRY_PASSWORD }}" | docker login ${{ secrets.REGISTRY_URL }} -u "${{ secrets.REGISTRY_USERNAME }}" --password-stdin
 
-      - name: Build and push Docker image
+      - name: Verify credentials are stored
+        run: |
+          echo "=== Config after login ==="
+          cat ~/.docker/config.json
+          echo "=== Testing credential access ==="
+          docker pull hello-world
+          docker tag hello-world ${{ secrets.REGISTRY_URL }}/test:latest
+
+      - name: Push test image
+        run: |
+          docker push ${{ secrets.REGISTRY_URL }}/test:latest
+
+      - name: Build and push main image
         run: |
           docker build -t ${{ secrets.REGISTRY_URL }}/pawtrack:latest .
           docker push ${{ secrets.REGISTRY_URL }}/pawtrack:latest
 
-      - name: Clean up
+      - name: Restore original config
         run: |
-          docker logout ${{ secrets.REGISTRY_URL }} || true
           mv ~/.docker/config.json.backup ~/.docker/config.json
         if: always()
