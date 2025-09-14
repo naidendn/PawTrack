@@ -24,6 +24,9 @@ public class SensorApp {
     @Value("${AWS_REGION:us-central-1}")
     private String awsRegion;
 
+    @Value("${DYNAMODB_TABLE:sensor_data}")
+    private String dynamoTable;
+
     private DynamoDbClient dynamoDB;
     private final RestTemplate restTemplate = new RestTemplate();
 
@@ -57,7 +60,7 @@ public class SensorApp {
             item.put("humidity", AttributeValue.builder().n(Double.toString(humidity)).build());
 
             PutItemRequest request = PutItemRequest.builder()
-                    .tableName("sensor_data")
+                    .tableName(dynamoTable)
                     .item(item)
                     .build();
 
@@ -76,7 +79,7 @@ public class SensorApp {
     public ResponseEntity<Map<String, Object>> getLatest(@PathVariable String roomId) {
         try {
             QueryRequest request = QueryRequest.builder()
-                    .tableName("sensor_data")
+                    .tableName(dynamoTable)
                     .keyConditionExpression("room_id = :roomId")
                     .expressionAttributeValues(Map.of(":roomId", AttributeValue.builder().s(roomId).build()))
                     .scanIndexForward(false)
