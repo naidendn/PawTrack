@@ -64,3 +64,13 @@ services:
 ```
 
 - `GET /api/sensor/latest/{roomId}` – Get latest reading for a room
+
+**Example response JSON:**
+```json
+{
+  "room_id": "bedroom",
+  "temperature": 24.3,
+  "humidity": 54.2,
+  "timestamp": "2025-09-14T21:48:52.043767853Z"
+}
+```
