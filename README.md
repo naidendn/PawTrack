@@ -14,8 +14,6 @@ AWS_ACCESS_KEY_ID=
 AWS_SECRET_ACCESS_KEY=
 ```
 
-> Do not commit your real `.env` file. Commit `.env.example` with empty values instead.
-
 ---
 
 ## Docker Deployment
