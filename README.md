@@ -62,4 +62,3 @@ services:
 ```
 
 - `GET /api/sensor/latest/{roomId}` – Get latest reading for a room
-test
