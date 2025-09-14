@@ -12,6 +12,7 @@ Create a `.env` file or set these in your deployment environment:
 AWS_REGION=
 AWS_ACCESS_KEY_ID=
 AWS_SECRET_ACCESS_KEY=
+DYNAMODB_TABLE=
 ```
 
 ---
@@ -43,6 +44,7 @@ services:
       AWS_REGION: ${AWS_REGION}
       AWS_ACCESS_KEY_ID: ${AWS_ACCESS_KEY_ID}
       AWS_SECRET_ACCESS_KEY: ${AWS_SECRET_ACCESS_KEY}
+      DYNAMODB_TABLE: ${DYNAMODB_TABLE}
     restart: unless-stopped
 ```
 
