@@ -10,7 +10,7 @@
         <relativePath/>
     </parent>
 
-    <groupId>com.sensor</groupId>
+    <groupId>org.nayden</groupId>
     <artifactId>sensor-app</artifactId>
     <version>1.0.0</version>
     <packaging>jar</packaging>
