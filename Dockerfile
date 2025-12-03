@@ -1,4 +1,4 @@
-FROM openjdk:17-jdk-slim
+FROM openjdk:26-ea-17-slim
 
 # Install Maven and curl
 RUN apt-get update && \
